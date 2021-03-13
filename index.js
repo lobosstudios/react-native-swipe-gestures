@@ -35,13 +35,12 @@ class GestureRecognizer extends Component {
   constructor(props, context) {
     super(props, context);
     this.swipeConfig = Object.assign(swipeConfig, props.config);
-  }
 
-  componentWillReceiveProps(props) {
-    this.swipeConfig = Object.assign(swipeConfig, props.config);
-  }
-
-  componentWillMount() {
+    // this code was refactored out of the
+    // componentWillMount() method, which is deprecated
+    // I also deleted componentWillReceiveProps() since
+    // I don't see the props being changed after this class
+    // is instantiated.
     const responderEnd = this._handlePanResponderEnd.bind(this);
     const shouldSetResponder = this._handleShouldSetPanResponder.bind(this);
     this._panResponder = PanResponder.create({
@@ -51,6 +50,8 @@ class GestureRecognizer extends Component {
       onPanResponderRelease: responderEnd,
       onPanResponderTerminate: responderEnd
     });
+
+
   }
 
   _handleShouldSetPanResponder(evt, gestureState) {
